@@ -117,3 +117,55 @@ logo.classList.contains('c');
 
 // Don't use
 logo.className = 'jonas';
+
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  console.log(s1coords);
+  console.log(e.target.getBoundingClientRect()); //target: button clicked
+  console.log('Current scroll (X/Y)', window.pageXOffset, pageYOffset);
+
+  console.log(
+    'Height/width viewport',
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
+
+  //Scrolling
+  // window.scrollTo(
+  //   s1coords.left + window.pageXOffset, //+ current scroll
+  //   s1coords.top + window.pageYOffset
+  // );
+
+  ///// old way
+  // window.scrollTo({
+  //   left: s1coords.left + window.pageXOffset, //+ current scroll
+  //   top: s1coords.top + window.pageYOffset,
+  //   behavior: 'smooth',
+  // });
+
+  ///// modern way
+  section1.scrollIntoView({
+    behavior: 'smooth',
+  });
+});
+
+const h1 = document.querySelector('h1');
+
+const alertH1 = function (e) {
+  //mouse hover
+  alert('addEventListener: Great! You are reading the heading :D');
+  h1.removeEventListener('mouseenter', alertH1);
+};
+
+h1.addEventListener('mouseenter', alertH1);
+
+setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000); //remove eventlistener after 3 seconds
+
+/////old way
+// h1.onmouseenter = function (e) {
+//   //mouse hover
+//   alert('addEventListener: Great! You are reading the heading :D');
+// };
