@@ -11,6 +11,12 @@ const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+const nav = document.querySelector('.nav');
+
 const openModal = function () {
   modal.classList.remove('hidden');
   overlay.classList.remove('hidden');
@@ -96,10 +102,6 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 
 ///////////////////////////////////
 // Tabbed component
-const tabs = document.querySelectorAll('.operations__tab');
-const tabsContainer = document.querySelector('.operations__tab-container');
-const tabsContent = document.querySelectorAll('.operations__content');
-
 tabsContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
   console.log(clicked);
@@ -120,6 +122,39 @@ tabsContainer.addEventListener('click', function (e) {
   document
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
+});
+
+///////////////////////////////////
+// Menu fade animation
+const handleHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
+    siblings.forEach(el => {
+      if (el !== link) el.style.opacity = this; //kiểm tra các link khác ko trùng với link đang hover
+    });
+    logo.style.opacity = this;
+  }
+};
+
+//Passing "argument" into handler
+nav.addEventListener('mouseover', handleHover.bind(0.5)); //bind sẽ gán giá trị argument vào this keyword trong hàm được gọi => do đó sẽ set = opacityy
+
+nav.addEventListener('mouseout', handleHover.bind(1));
+
+///////////////////////////////////
+// Sticky navigation
+const initialCoords = section1.getBoundingClientRect(); //lấy thông số toạ độ của section1
+console.log(initialCoords);
+
+window.addEventListener('scroll', function (e) {
+  console.log(window.scrollY);
+
+  if (window.scrollY > initialCoords.top)
+    //so sánh với thông số top
+    nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
 });
 
 /////////////////////////////////////
@@ -254,7 +289,7 @@ document.querySelector('.nav').addEventListener('click', function (e) {
   this.style.backgroundColor = randomColor();
   console.log('NAV', e.target, e.currentTarget);
 });
-*/
+
 
 const h1 = document.querySelector('h1');
 
@@ -283,3 +318,5 @@ console.log(h1.parentElement.children);
 [...h1.parentElement.children].forEach(function (el) {
   if (el !== h1) el.style.transform = 'scale(0.5)';
 });
+
+*/
