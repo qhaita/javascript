@@ -145,17 +145,30 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 
 ///////////////////////////////////
 // Sticky navigation
-const initialCoords = section1.getBoundingClientRect(); //lấy thông số toạ độ của section1
-console.log(initialCoords);
+// const initialCoords = section1.getBoundingClientRect(); //lấy thông số toạ độ của section1
+// console.log(initialCoords);
 
-window.addEventListener('scroll', function (e) {
-  console.log(window.scrollY);
+// window.addEventListener('scroll', function (e) {
+//   console.log(window.scrollY);
 
-  if (window.scrollY > initialCoords.top)
-    //so sánh với thông số top
-    nav.classList.add('sticky');
-  else nav.classList.remove('sticky');
-});
+//   if (window.scrollY > initialCoords.top)
+//     //so sánh với thông số top
+//     nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
+// });
+
+///////////////////////////////////
+// Sticky navigation: Intersection Observer API
+
+const obsCallback = function () {};
+
+const obsOptions = {
+  root: null,
+  threshold: 0.1,
+};
+
+const observer = new IntersectionObserver(obsCallback, obsOptions);
+observer.observe(section1);
 
 /////////////////////////////////////
 /////////////////////////////////////
