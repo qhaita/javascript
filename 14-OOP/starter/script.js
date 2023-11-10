@@ -24,9 +24,15 @@ console.log(jonas);
 
 const matilda = new Person('Matilda', 2017);
 const jack = new Person('Jack', 1975);
-console.log(matilda, jack);
+console.log(matilda);
 
 console.log(jonas instanceof Person);
+
+Person.hey = function () {
+  console.log(`Hey there`);
+};
+
+Person.hey();
 
 //////////////////////////////////////
 // Prototypes
@@ -63,3 +69,107 @@ console.log(arr.unique());
 
 const h1 = document.querySelector('h1');
 console.dir(x => x + 1);
+
+console.log(`------------------------------------------------`);
+console.log(`------------------ES6 CLASSES-------------------`);
+
+// class expression
+// const PersonCl = class { }
+
+// class declaration
+
+class PersonCl {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+
+  // Instance Method
+  // Methods will be added to .prototype property
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
+
+  greet() {
+    console.log(`Hey ${this.firstName}`);
+  }
+
+  // Getters and setters
+  get age() {
+    return 2037 - this.birthYear;
+  }
+
+  // Set a property that already exists
+  set fullName(name) {
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`${name} is not a full name`);
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+
+  // Static method
+  static hey() {
+    console.log(`Hey there !`);
+  }
+}
+
+const jessica = new PersonCl('Jessica Davis', 1996);
+console.log(jessica);
+jessica.calcAge();
+console.log(jessica.age);
+
+console.log(jessica.__proto__ === PersonCl.prototype);
+
+PersonCl.hey();
+
+// 1. Classes are not hosited (không thể sử dụng trước khi khai báo)
+// 2. Class are first-class citizens
+// 3. Classes are executed in strict mode
+
+const walter = new PersonCl('Walter White', 1965);
+
+const account = {
+  owner: 'jonas',
+  movements: [100, 200, 150],
+
+  get latest() {
+    return this.movements.slice(-1).pop();
+  },
+
+  set latest(mov) {
+    this.movements.push(mov);
+  },
+};
+
+console.log(account.latest);
+
+account.latest = 50;
+console.log(account.movements);
+
+console.log(`------------------------------------------------`);
+console.log(`------------------OBJECT.CREATE-------------------`);
+
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+console.log(steven);
+steven.name = 'Steven';
+steven.birthYear = 2002;
+steven.calcAge();
+
+console.log(steven.__proto__ === PersonProto);
+
+const sarah = Object.create(PersonProto);
+sarah.init('Sarah', 1979);
+sarah.calcAge();
