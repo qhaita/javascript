@@ -39,4 +39,5 @@ ford.brake();
 console.log(`${ford.make} going at ${ford.speed} km/h`);
 
 ford.speedUS = 200;
+
 console.log(`${ford.make} going at ${ford.speed} km/h`);
