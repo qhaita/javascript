@@ -211,3 +211,73 @@ console.log(mike instanceof Person);
 
 Student.prototype.constructor = Student;
 console.dir(Student.prototype.constructor);
+
+console.log(
+  `------------------Inheritance Between "Classes": ES6 Classes-------------------`
+);
+class PersonInES6 {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+
+  // Instance Method
+  // Methods will be added to .prototype property
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
+
+  greet() {
+    console.log(`Hey ${this.firstName}`);
+  }
+
+  // Getters and setters
+  get age() {
+    return 2037 - this.birthYear;
+  }
+
+  // Set a property that already exists
+  set fullName(name) {
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`${name} is not a full name`);
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+
+  // Static method
+  static hey() {
+    console.log(`Hey there !`);
+  }
+}
+
+class StudentES6 extends PersonInES6 {
+  constructor(fullName, birthYear, course) {
+    // Always needs to happen first !
+    super(fullName, birthYear); //agrument is parant class
+
+    this.course = course;
+  }
+  introduce() {
+    console.log(`My name is ${this.fullName} and I study ${this.course}`);
+  }
+
+  calcAge() {
+    console.log(
+      `I'm ${
+        2037 - this.birthYear
+      } years old, but as a student i feel more like ${
+        2037 - this.birthYear + 10
+      }`
+    );
+  }
+}
+
+const martha = new StudentES6('Martha Jones', 2012, 'Computer Science');
+martha.introduce();
+martha.calcAge();
+
+console.log(
+  `------------------Inheritance Between "Classes": Object.create-------------------`
+);
